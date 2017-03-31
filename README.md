@@ -1,1 +1,1 @@
-## react-ad-gpt
+# React Ad GPT
