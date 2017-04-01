@@ -1,4 +1,5 @@
-import { gptEmitter } from "../utils/gptEventEmitter";
+import { gptEmitter } from "./gptEventEmitter";
+import { gptDisplay } from "./gptDisplay";
 
 export class gptInitialize {
   static initGPTObject() {
@@ -29,6 +30,7 @@ export class gptInitialize {
       this.win.googletag.pubads().enableVideoAds();
       this.win.googletag.enableServices();
 
+      gptDisplay.initGPTDisplay();
       gptEmitter.emit("gptEnabled");
 
     });
