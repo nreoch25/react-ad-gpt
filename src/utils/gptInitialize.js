@@ -1,3 +1,5 @@
+import { gptEmitter } from "../utils/gptEventEmitter";
+
 export class gptInitialize {
   static initGPTObject() {
     this.win.googletag = this.win.googletag || {};
@@ -27,7 +29,7 @@ export class gptInitialize {
       this.win.googletag.pubads().enableVideoAds();
       this.win.googletag.enableServices();
 
-      // TODO set state for AdGPT components
+      gptEmitter.emit("gptEnabled");
 
     });
   }
