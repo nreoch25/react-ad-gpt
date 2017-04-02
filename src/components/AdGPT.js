@@ -18,11 +18,10 @@ class AdGPT extends Component {
     }
   }
   render() {
+    const classTitle = `ad-${this.props.type}`;
+    this.checkGPT();
     return (
-      <div>
-        <h3>React Ad GPT Package</h3>
-        { this.checkGPT() }
-      </div>
+      <div className={classTitle}></div>
     );
   }
 }

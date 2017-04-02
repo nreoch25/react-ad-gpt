@@ -1,7 +1,10 @@
+import React from "react";
 import ReactDOM from "react-dom";
+import AdDisplay from "../components/AdDisplay";
 
 export class gptManager {
   static injectDisplayAd(adProps, reference) {
-    console.log("DISPLAY AD", adProps, reference);
+    let adNode = ReactDOM.findDOMNode(reference);
+    ReactDOM.render(<AdDisplay {...adProps} />, adNode);
   }
 }
