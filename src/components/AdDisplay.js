@@ -8,7 +8,6 @@ class AdDisplay extends Component {
     this.displayAd();
   }
   displayAd() {
-    console.log("PROPS", this.props);
     let containerID = `${this.props.type}-${Math.floor((Math.random() * 1000000) + 1)}`;
     let adContainer = this.refs.advertisement;
     adContainer.setAttribute("id", containerID);
