@@ -2,35 +2,44 @@ import React, { Component, PropTypes } from "react";
 import { gptEmitter } from "../utils/gptEventEmitter";
 import { gptManager } from "../utils/gptManager";
 
+let state = { "gptEnabled" : false, "initialLoad": true };
+
 class AdGPT extends Component {
   constructor(props) {
     super(props);
-    this.state = { "gptEnabled" : false };
-    this.initialLoad = true;
+    this.state = state;
+  }
+  componentDidMount() {
+    if(this.state.gptEnabled === true && this.state.initialLoad === false) {
+      gptManager.injectDisplayAd(this.props, this);
+    }
   }
   componentWillMount() {
-    gptEmitter.on("gptEnabled", () => {
-      this.setState({ "gptEnabled" : true });
-    });
+    if(this.state.gptEnabled === false) {
+      gptEmitter.on("gptEnabled", () => {
+        console.log("GPT ENABLED");
+        this.setState({ "gptEnabled" : true });
+      });
+    }
   }
-  shouldComponentUpdate(nextProps) {
-    if(this.initialLoad === true) {
-      this.initialLoad = false;
-      return true;
-    }
-    if(nextProps.hierarchy !== this.props.hierarchy) {
-      return true;
-    }
-    return false;
+  componentWillUnmount() {
+    state = this.state;
+  }
+  shouldComponentUpdate() {
+    console.log("SHOULD");
+    return true;
   }
   checkGPT() {
-    if(this.state.gptEnabled === true) {
-      console.log("here");
+    console.log("CHECK");
+    console.log(this.state);
+    if(this.state.gptEnabled === true && this.state.initialLoad === true) {
+      console.log("INJECT");
+      if(this.state.initialLoad === true) { this.state.initialLoad = false; }
       gptManager.injectDisplayAd(this.props, this);
     }
   }
   render() {
-    console.log("RENDER", this.props);
+    console.log("RENDER");
     const classTitle = `ad-${this.props.type}`;
     this.checkGPT();
     return (
