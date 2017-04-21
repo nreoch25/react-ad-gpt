@@ -10,7 +10,9 @@ class AdGPT extends Component {
     this.state = state;
   }
   componentDidMount() {
+    console.log("MOUNT", this.props);
     if(this.state.gptEnabled === true && this.state.initialLoad === false) {
+      console.log("MOUNT - INJECT AD FOR:", this.props.hierarchy);
       gptManager.injectDisplayAd(this.props, this);
     }
   }
@@ -25,15 +27,20 @@ class AdGPT extends Component {
   componentWillUnmount() {
     state = this.state;
   }
-  shouldComponentUpdate() {
-    console.log("SHOULD");
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("SHOULD", this.props, nextProps);
+    if(this.props.hierarchy !== nextProps.hierarchy) {
+      console.log("SHOULD - INJECT AD FOR:", nextProps.hierarchy);
+      gptManager.injectDisplayAd(nextProps, this);
+      return false;
+    }
     return true;
   }
   checkGPT() {
     console.log("CHECK");
     console.log(this.state);
     if(this.state.gptEnabled === true && this.state.initialLoad === true) {
-      console.log("INJECT");
+      console.log("CHECK - ONLY FOR INITIAL LOAD - INJECT AD FOR:", this.props.hierarchy);
       if(this.state.initialLoad === true) { this.state.initialLoad = false; }
       gptManager.injectDisplayAd(this.props, this);
     }
